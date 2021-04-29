@@ -70,10 +70,14 @@ Increased hyperparams::step_size to 30, hyperparams::ph_rad is 25, and implement
 /*Log: Vedang 29-04-2021 19:41
 Packaged hyperparams, organised code.
 */
-/*Log:	Vedang 29-04-2021 19:51
+/*Log: Vedang 29-04-2021 19:51
 Tested with different target locations. Works well. Self-corrects. However after too much time, a drift to the left of target is observed.
 Also after too much time, quality(number of ants going) reduces. 
 Will implement high pheromone density at target.
+*/
+/*Log: Vedang 29-04-2021 21:38
+Implemented high pheromone density at target. Works very well to reduce local accumulation and gives nearly straight line paths.
+Similar change in pheromone density can be used to create obstacles in the path. Need to unify target parameters. 
 */
 
 //@author: Vedang Asgaonkar
@@ -116,34 +120,53 @@ bool recall = false ;
 
 
 class Pheromone{
+	private:
+	int tar_x1, tar_x2, tar_y1, tar_y2 ;
 	public:
 	double ph_arr[1000][1000];
-	Pheromone(){
+	Pheromone(int tar_x1, int tar_x2, int tar_y1, int tar_y2){
 		for(int i=0 ; i<1000 ; i++){
 			for(int j=0; j<1000 ; j++){
-				ph_arr[i][j] = 0.0 ;
+				if( i<= tar_x2 && i>= tar_x1 && j<=tar_y2 && j>=tar_y1 ){
+					ph_arr[i][j]= 200.0;	
+				}
+				else{
+					ph_arr[i][j] = 0.0 ;
+				}
 			}
 		}
 	}
 	void exponential_evaporate( double decay ){
 		for(int i = 0 ; i <1000 ; i++){
 			for(int j=0 ; j<1000 ; j++){
-				ph_arr[i][j] = ph_arr[i][j]*decay ;
+				if( i<= tar_x2 && i>= tar_x1 && j<=tar_y2 && j>=tar_y1 ){
+							
+				}
+				else{
+					ph_arr[i][j] = ph_arr[i][j]*decay ;
+				}
+				
 			}
 		}
 	}
 	void relu_evaporate( double decay ){
 		for(int i = 0 ; i <1000 ; i++){
 			for(int j=0 ; j<1000 ; j++){
-				if( ph_arr[i][j] > decay ){
+				if( i<= tar_x2 && i>= tar_x1 && j<=tar_y2 && j>=tar_y1 ){
+							
+				}
+				else{
+					if( ph_arr[i][j] > decay ){
 					ph_arr[i][j] -= decay ;
 				}
+				}
+				
 			}
 		}
 	}
 };
 
-Pheromone ph;	
+Pheromone ph(190 ,240 , 100 , 150);	
 
 
 class Shape : public Fl_Widget  {
@@ -386,7 +409,7 @@ int main(){
 	
 	Wrapper* wrapper = new Wrapper(arr);
 	 // rect = new MyRectangle( 500 , 500 , 5 , 5 , 120 );
-	char carr[3] = {'G','o','\0'} ;
+	char carr[5] = {'S','t','o','p','\0'} ;
 	MyButton* bt = new MyButton( 700 ,700,30,30,carr);
 	
 	MyTimer timer ;
@@ -400,6 +423,5 @@ int main(){
 		cout << "Finished" <<endl ;
 	}
 }
-
 
 
