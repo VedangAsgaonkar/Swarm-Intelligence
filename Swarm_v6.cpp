@@ -92,6 +92,13 @@ fault. Generations of 50 seem to give more quality than of 10, but 10 gives narr
 Local accumulation at some places still observed, particularly in the 10 case, 4 local accumulations, two the the left of target, one
 at the beginning and one at the left of the major path. Have to figure out why everything is to the left.
 */
+/*Log: Vedang 30-04-2021 12:22
+The single generation pattern as of v5 does look a lot cleaner. But not sure how well it would work for an obstacle course.
+Setting sub_generation_size to 0 in v6 is a total failure with a mess of pheromone.
+*/
+/*Log: Vedang 30-04-2021 16:32
+Changed decay of relu from 0.05 to 0.1, works better.
+*/
 
 //@author: Vedang Asgaonkar
 
@@ -117,9 +124,11 @@ namespace hyperparams{
 	double weight = 0.25 ;
 	int recipocal_breakout_prob = 100;
 	int evap_choice = 1 ; // 0 for exponential, 1 for relu
-	double decay = 0.05;
-	int num_ants = 100; //needs to be manually set everywhere as variable length array forbidden
+	double decay = 0.1;
+	int num_ants = 1000; //needs to be manually set everywhere as variable length array forbidden
 	double std_dev = PI/8 ;
+	int first_generation_size = 100;
+	int sub_generation_size = 50 ;
 }
 
 
@@ -377,7 +386,7 @@ class Wrapper{
 	void recallAll(){
 		int init_ant_index = ant_index ;
 		if( ant_index < 1000){
-			for( ; ant_index - init_ant_index < 10 ; ant_index++){
+			for( ; ant_index - init_ant_index < hyperparams::sub_generation_size ; ant_index++){
 				if( ant_index < 1000){
 					arr[ant_index]->isDormant=false;
 				}
@@ -465,14 +474,14 @@ int main(){
 	for(int i = 0 ; i < 1000 ; i++ ){
 		arr[i] = new Ant( 500 , 500 , 5 , 5 , 120 , 190 ,240 , 100 , 150);
 		arr[i]->currAngle = distribution2(generator);
-		if(i<100){
+		if(i<hyperparams::first_generation_size){
 			arr[i]->isDormant = false;
 		}
 		else{
 			arr[i]->isDormant = true ;
 		}
 	}
-	ant_index = 100;
+	ant_index = hyperparams::first_generation_size;
 	
 	Wrapper* wrapper = new Wrapper(arr);
 	 // rect = new MyRectangle( 500 , 500 , 5 , 5 , 120 );
@@ -490,6 +499,5 @@ int main(){
 		cout << "Finished" <<endl ;
 	}
 }
-
 
 
