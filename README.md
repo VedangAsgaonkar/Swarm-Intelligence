@@ -6,6 +6,13 @@ of maximum pheromone. The model is observed to overcome local extrema quite succ
 For more details of implementation, read logs in the code.
 Stable models are v0, v1, v3, v5, v6, v8, v9, v10, v11
 
+## Images
+Some images of different version in action
+### v11
+| Source | Exploration | Target | Path |
+| --- | --- | --- | --- |
+| <img src="images/source_v11.png" width=200 height=200> | <img src="images/explore_v11.png" width=200 height=200> | <img src="images/target_v11.cpp" width=200 height=200> | <img src="images/path_v11.png" width=200 height=200> |
+
 ## Installation and Running
 ### For Linux 
 Install g++ on your device and add its path to the environment variable. Install fltk:
