@@ -11,7 +11,17 @@ Some images of different version in action
 ### v11
 | Source | Exploration | Target | Path |
 | --- | --- | --- | --- |
-| <img src="images/source_v11.png" width=200 height=200> | <img src="images/explore_v11.png" width=200 height=200> | <img src="images/target_v11.cpp" width=200 height=200> | <img src="images/path_v11.png" width=200 height=200> |
+| <img src="images/source_v11.png" width=200 height=200> | <img src="images/explore_v11.png" width=200 height=200> | <img src="images/target_v11.png" width=200 height=200> | <img src="images/path_v11.png" width=200 height=200> |
+
+### v8
+| Exploration | Path |
+| --- | --- |
+| <img src="images/explore_v8.png" width=200 height=200> | <img src="images/path_v8.png" width=200 height=200> |
+
+### v5
+| Exploration | Path |
+| --- | --- |
+| <img src="images/explore_v5.png" width=200 height=200> | <img src="images/path_v5.png" width=200 height=200> |
 
 ## Installation and Running
 ### For Linux 
